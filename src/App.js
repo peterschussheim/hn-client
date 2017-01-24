@@ -26,7 +26,13 @@ class App extends Component {
     this.setSearchTopstories = this.setSearchTopstories.bind(this)
     this.fetchSearchTopStories = this.fetchSearchTopStories.bind(this)
     this.onSearchChange = this.onSearchChange.bind(this);
+    this.onSearchSubmit = this.onSearchSubmit.bind(this)
     this.onDismiss = this.onDismiss.bind(this);
+  }
+
+  onSearchSubmit() {
+    const { searchTerm } = this.state
+    this.fetchSearchTopStories(searchTerm)
   }
 
   setSearchTopstories(result) {
@@ -61,7 +67,11 @@ class App extends Component {
     return (
       <div className="page">
         <div className="interactions">
-          <Search value={searchTerm} onChange={this.onSearchChange}>
+          <Search
+            value={searchTerm}
+            onChange={this.onSearchChange}
+            onSubmit={this.onSearchSubmit}
+            >
             Search
           </Search>
         </div>
@@ -78,9 +88,16 @@ class App extends Component {
   }
 }
 
-const Search = ({ value, onChange, children }) =>
-  <form action="">
-    {children} <input type="text" value={value} onChange={onChange} />
+const Search = ({ value, onChange, children, onSubmit }) =>
+  <form onSubmit={onSubmit}>
+    <input
+     type="text" 
+     value={value} 
+     onChange={onChange}
+    />
+    <button type="submit">
+      {children}
+    </button>
   </form>
 
 // styles for Table

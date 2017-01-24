@@ -89,11 +89,18 @@ class App extends Component {
     this.setState({ searchTerm: event.target.value });
   }
 
+  // refactor to handle multiple results
   onDismiss(id) {
+    const { searchKey, results } = this.state
+    const { hits, page } = results[searchKey]
+
     const isNotId = item => item.objectID !== id;
-    const updatedHits = this.state.result.hits.filter(isNotId);
+    const updatedHits = hits.filter(isNotId);
     this.setState({
-      result: { ...this.state.result, hits: updatedHits }
+      results: {
+         ...results,
+          [searchKey]: { hits: updatedHits, page }
+      }
     });
   }
 

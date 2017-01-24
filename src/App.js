@@ -31,6 +31,7 @@ class App extends Component {
       searchTerm: DEFAULT_QUERY,
     };
 
+    this.needsToSearchTopstories = this.needsToSearchTopstories.bind(this)
     this.setSearchTopstories = this.setSearchTopstories.bind(this)
     this.fetchSearchTopStories = this.fetchSearchTopStories.bind(this)
     this.onSearchChange = this.onSearchChange.bind(this);
@@ -38,9 +39,18 @@ class App extends Component {
     this.onDismiss = this.onDismiss.bind(this);
   }
 
+  needsToSearchTopstories(searchTerm) {
+    return !this.state.results[searchTerm];
+  }
+
   onSearchSubmit(event) {
     const { searchTerm } = this.state
     this.setState({ searchKey: searchTerm })
+
+    if (this.needsToSearchTopstories(searchTerm)) {
+      this.fetchSearchTopStories(searchTerm, DEFAULT_PAGE)
+    }
+
     this.fetchSearchTopStories(searchTerm, DEFAULT_PAGE)
     event.preventDefault()
   }
@@ -89,7 +99,6 @@ class App extends Component {
     this.setState({ searchTerm: event.target.value });
   }
 
-  // refactor to handle multiple results
   onDismiss(id) {
     const { searchKey, results } = this.state
     const { hits, page } = results[searchKey]

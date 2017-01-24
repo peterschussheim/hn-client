@@ -30,9 +30,10 @@ class App extends Component {
     this.onDismiss = this.onDismiss.bind(this);
   }
 
-  onSearchSubmit() {
+  onSearchSubmit(event) {
     const { searchTerm } = this.state
     this.fetchSearchTopStories(searchTerm)
+    event.preventDefault()
   }
 
   setSearchTopstories(result) {
@@ -78,7 +79,6 @@ class App extends Component {
         { result
             ? <Table
              list={result.hits}
-             pattern={searchTerm}
              onDismiss={this.onDismiss} 
             />
             : null
@@ -105,9 +105,9 @@ const largeColumn = { width: '40%' }
 const midColumn = { width: '30%' }
 const smallColumn = { width: '10%' }
 
-const Table = ({ list, pattern, onDismiss }) =>
+const Table = ({ list, onDismiss }) =>
   <div className="table">
-    {list.filter(isSearched(pattern)).map(item => (
+    {list.map(item =>
       <div key={item.objectID} className="table-row">
         <span style={largeColumn}>
           <a href={item.url}> {item.title} </a>
@@ -129,7 +129,7 @@ const Table = ({ list, pattern, onDismiss }) =>
           </Button>
         </span>
       </div>
-    ))}
+    )}
   </div>
 
 const Button = ({ onClick, className = '', children }) =>

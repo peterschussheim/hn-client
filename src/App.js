@@ -20,15 +20,27 @@ const list = [
   },
 ];
 
+// when a searchTerm is set, match inbound searchTerm pattern with item title
+const isSearched = searchTerm => item => 
+    // condition that returns true or false
+    !searchTerm || item.title.toLowerCase().includes(searchTerm.toLowerCase());
+
+
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       list,
+      searchTerm: '',
     };
 
+    this.onSearchChange = this.onSearchChange.bind(this)
     this.onDismiss = this.onDismiss.bind(this);
+  }
+
+  onSearchChange(event) {
+    this.setState({ searchTerm: event.target.value })
   }
 
   onDismiss(id) {
@@ -40,7 +52,12 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.state.list.map(item =>
+        <form>
+          <input type="text"
+          onChange={this.onSearchChange}
+          />
+        </form>
+        { this.state.list.filter(isSearched(this.state.searchTerm)).map(item =>
           <div key={item.objectID}>
             <span>
               <a href={item.url}> {item.title} </a>

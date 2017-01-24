@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
 
+const DEFAULT_QUERY = 'react'
+const PATH_BASE = 'https://hn.algolia.com/api/v1'
+const PATH_SEARCH = '/search'
+const PARAM_SEARCH = 'query='
+var url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${DEFAULT_QUERY}`
+
+console.log(url);
+
+
 const list = [
   {
     title: 'React',

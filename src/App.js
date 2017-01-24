@@ -55,6 +55,7 @@ class App extends Component {
       <div className="App">
         <form>
           <input type="text"
+          value={searchTerm}
           onChange={this.onSearchChange}
           />
         </form>

@@ -11,15 +11,6 @@ const PARAM_SEARCH = 'query='
 const PARAM_PAGE = 'page='
 const PARAM_HPP = 'hitsPerPage='
 
-// var url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${DEFAULT_QUERY}&${PARAM_PAGE}`
-
- /*
-// when a searchTerm is set, match inbound searchTerm pattern with item title
-const isSearched = searchTerm => item => 
-  // condition that returns true or false
-  !searchTerm || item.title.toLowerCase().includes(searchTerm.toLowerCase());
-*/
-
 class App extends Component {
 
   constructor(props) {
@@ -33,12 +24,17 @@ class App extends Component {
 
     this.needsToSearchTopstories = this.needsToSearchTopstories.bind(this)
     this.setSearchTopstories = this.setSearchTopstories.bind(this)
-    this.fetchSearchTopStories = this.fetchSearchTopStories.bind(this)
+    this.fetchSearchTopstories = this.fetchSearchTopstories.bind(this)
     this.onSearchChange = this.onSearchChange.bind(this);
     this.onSearchSubmit = this.onSearchSubmit.bind(this)
     this.onDismiss = this.onDismiss.bind(this);
   }
 
+  componentDidMount() {
+    const { searchTerm } = this.state
+    this.setState({ searchKey: searchTerm })
+    this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE)
+  }
   needsToSearchTopstories(searchTerm) {
     return !this.state.results[searchTerm];
   }
@@ -48,10 +44,9 @@ class App extends Component {
     this.setState({ searchKey: searchTerm })
 
     if (this.needsToSearchTopstories(searchTerm)) {
-      this.fetchSearchTopStories(searchTerm, DEFAULT_PAGE)
+      this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE)
     }
-
-    this.fetchSearchTopStories(searchTerm, DEFAULT_PAGE)
+    
     event.preventDefault()
   }
 
@@ -79,20 +74,14 @@ class App extends Component {
        results: {
           ...results,
           [searchKey]: { hits: updatedHits, page }
-       }  
+       }
     })
   }
 
-  fetchSearchTopStories(searchTerm, page) {
+  fetchSearchTopstories(searchTerm, page) {
     fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`)
       .then(response => response.json())
       .then(result => this.setSearchTopstories(result))
-  }
-
-  componentDidMount() {
-    const { searchTerm } = this.state
-    this.setState({ searchKey: searchTerm })
-    this.fetchSearchTopStories(searchTerm, DEFAULT_PAGE)
   }
 
   onSearchChange(event) {
@@ -144,7 +133,7 @@ class App extends Component {
           onDismiss={this.onDismiss}
         />
         <div className="interactions">
-          <Button onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}>
+          <Button onClick={() => this.fetchSearchTopstories(searchKey, page + 1)}>
             More
           </Button>
         </div>

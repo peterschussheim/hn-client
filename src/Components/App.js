@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import './App.css';
+import '../App.css';
+import Search from './Search'
+import Table from './Table'
+import Button from './Button'
 
 const DEFAULT_QUERY = 'react'
 const DEFAULT_PAGE = 0
@@ -11,7 +14,7 @@ const PARAM_SEARCH = 'query='
 const PARAM_PAGE = 'page='
 const PARAM_HPP = 'hitsPerPage='
 
-class App extends Component {
+export default class App extends Component {
 
   constructor(props) {
     super(props);
@@ -104,7 +107,6 @@ class App extends Component {
 
   render() {
     const { searchTerm, results, searchKey } = this.state;
-    
     const page = (
       results &&
       results[searchKey] &&
@@ -140,61 +142,4 @@ class App extends Component {
       </div>
     );
   }
-}
-
-const Search = ({ value, onChange, children, onSubmit }) =>
-  <form onSubmit={onSubmit}>
-    <input
-     type="text" 
-     value={value} 
-     onChange={onChange}
-    />
-    <button type="submit">
-      {children}
-    </button>
-  </form>
-
-// styles for Table
-const largeColumn = { width: '40%' }
-const midColumn = { width: '30%' }
-const smallColumn = { width: '10%' }
-
-const Table = ({ list, onDismiss }) =>
-  <div className="table">
-    {list.map(item =>
-      <div key={item.objectID} className="table-row">
-        <span style={largeColumn}>
-          <a href={item.url}> {item.title} </a>
-        </span>
-        <span style={midColumn}>
-          {item.author}
-        </span>
-        <span style={smallColumn}>
-          {item.num_comments}
-        </span>
-        <span style={smallColumn}>
-          {item.points}
-        </span>
-        <span>
-          <Button
-            onClick={() => onDismiss(item.objectID)}
-            className="button-inline">
-            Dismiss
-          </Button>
-        </span>
-      </div>
-    )}
-  </div>
-
-const Button = ({ onClick, className = '', children }) =>
-  <button onClick={onClick} className={className} type="button">
-    {children}
-  </button>
-
-export default App;
-
-export {
-  Button,
-  Search,
-  Table
 }

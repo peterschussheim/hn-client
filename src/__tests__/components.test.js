@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer'
-import App, { Search, Button, Table } from './App';
+import App from '../Components/App';
+import Search from '../Components/Search'
+import Button from '../Components/Button'
+import Table from '../Components/Table'
 
 describe('App', () => {
   it('renders without crashing', () => {
@@ -46,7 +49,7 @@ describe('Button', () => {
   })
 })
 
-describe('button', () => {
+describe('Table', () => {
   const props = {
     list: [
       { title: '1', author: '1', num_comments: 1, points: 2, objectID: 'y'},
@@ -55,7 +58,7 @@ describe('button', () => {
   }
   it('renders', () => {
     const div = document.createElement('div')
-    ReactDOM.render(<Table { ...props }/>, div)
+    ReactDOM.render(<Table { ...props } />, div)
   })
 
   test('snapshots', () => {

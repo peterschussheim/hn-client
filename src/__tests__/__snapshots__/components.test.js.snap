@@ -52,7 +52,7 @@ exports[`Search snapshots 1`] = `
 </form>
 `;
 
-exports[`button snapshots 1`] = `
+exports[`Table snapshots 1`] = `
 <div
   className="table">
   <div

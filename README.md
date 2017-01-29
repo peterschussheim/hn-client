@@ -2,7 +2,7 @@
 
 ## TODO
 
-- [ ] Refactor to use ES6 modules.
+- [x] Refactor to use ES6 modules.
 - [ ] 100% coverage with Jest/Enzyme.
 - [ ] Improve styling (flexbox).
 - [ ] Sort columns.

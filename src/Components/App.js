@@ -23,6 +23,7 @@ export default class App extends Component {
       results: null,
       searchKey: '',
       searchTerm: DEFAULT_QUERY,
+      isLoading: false,
     };
 
     this.needsToSearchTopstories = this.needsToSearchTopstories.bind(this)

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import '../App.css';
 import Search from './Search'
 import Table from './Table'
-import Button from './Button'
-import Loading from './Loading'
+import { ButtonWithLoading } from './Button'
+// import Loading from './Loading'
 
 const DEFAULT_QUERY = 'react'
 const DEFAULT_PAGE = 0
@@ -134,13 +134,11 @@ export default class App extends Component {
           onDismiss={this.onDismiss}
         />
         <div className="interactions">
-          { isLoading
-            ? <Loading />
-            : <Button
-              onClick={() => this.fetchSearchTopstories(searchKey, page + 1)}>
-              More
-            </Button>
-          }
+          <ButtonWithLoading
+            isLoading={isLoading}
+            onClick={() => this.fetchSearchTopstories(searchKey, page + 1)}>
+            More
+          </ButtonWithLoading>
         </div>
       </div>
     );

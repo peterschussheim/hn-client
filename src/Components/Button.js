@@ -1,6 +1,7 @@
 import React from 'react'
+import Loading from './Loading'
 
-const Button = ({ onClick, className = '', children }) =>
+export const Button = ({ onClick, className = '', children }) =>
   <button
     onClick={onClick}
     className={className}
@@ -9,4 +10,8 @@ const Button = ({ onClick, className = '', children }) =>
     {children}
   </button>
 
-export default Button
+export const withLoading = Component => ({ isLoading, ...rest }) =>
+  isLoading ? <Loading /> : <Component { ...rest } />
+
+export const ButtonWithLoading = withLoading(Button);
+

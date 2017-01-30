@@ -3,6 +3,7 @@ import '../App.css';
 import Search from './Search'
 import Table from './Table'
 import Button from './Button'
+import Loading from './Loading'
 
 const DEFAULT_QUERY = 'react'
 const DEFAULT_PAGE = 0
@@ -59,8 +60,6 @@ export default class App extends Component {
     const { hits, page } = result
     const { searchKey, results } = this.state
 
-    // check if there are already old hits
-    // page = 0 means new search req from componentDidMount() or onSearchSubmit()
     const oldHits = results && results[searchKey]
       ? results[searchKey].hits
       : [];
@@ -71,18 +70,17 @@ export default class App extends Component {
       ...hits
     ]
 
-    // set updatedHits and page in component state
-    // using computed prop names, [searchKey] will be allocated
-    // dynamically at runtime.
-    this.setState({
+   this.setState({
        results: {
           ...results,
           [searchKey]: { hits: updatedHits, page }
-       }
+       },
+       isLoading: false
     })
   }
 
   fetchSearchTopstories(searchTerm, page) {
+    this.setState({ isLoading: true })
     fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`)
       .then(response => response.json())
       .then(result => this.setSearchTopstories(result))
@@ -107,7 +105,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { searchTerm, results, searchKey } = this.state;
+    const { searchTerm, results, searchKey, isLoading } = this.state;
     const page = (
       results &&
       results[searchKey] &&
@@ -136,9 +134,13 @@ export default class App extends Component {
           onDismiss={this.onDismiss}
         />
         <div className="interactions">
-          <Button onClick={() => this.fetchSearchTopstories(searchKey, page + 1)}>
-            More
-          </Button>
+          { isLoading
+            ? <Loading />
+            : <Button
+              onClick={() => this.fetchSearchTopstories(searchKey, page + 1)}>
+              More
+            </Button>
+          }
         </div>
       </div>
     );

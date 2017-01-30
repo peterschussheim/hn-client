@@ -1,5 +1,5 @@
 # hn-client
-
+[![CircleCI](https://circleci.com/gh/peterschussheim/hn-client.svg?style=svg)](https://circleci.com/gh/peterschussheim/hn-client)
 ## TODO
 
 - [x] Refactor to use ES6 modules.

@@ -118,7 +118,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { searchTerm, results, searchKey, isLoading } = this.state;
+    const { searchTerm, results, searchKey, isLoading, sortKey } = this.state;
     const page = results && results[searchKey] && results[searchKey].page || 0;
 
     const list = results && results[searchKey] && results[searchKey].hits || [];
@@ -134,7 +134,12 @@ export default class App extends Component {
             Search
           </Search>
         </div>
-        <Table list={list} onDismiss={this.onDismiss} />
+        <Table 
+          list={list}
+          sortKey={sortKey}
+          onSort={this.onSort}
+          onDismiss={this.onDismiss} 
+        />
         <div className="interactions">
           <ButtonWithLoading
             isLoading={isLoading}

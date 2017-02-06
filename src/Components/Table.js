@@ -17,7 +17,10 @@ const SORTS = {
 };
 
 const Sort = ({ sortKey, onSort, children }) =>
-  <Button onClick={() => onSort(sortKey)}
+  <Button
+    onClick={() => onSort(sortKey)}
+    className="button-inline"
+  >
     {children}
   </Button>
 
@@ -31,6 +34,25 @@ const Table = ({ list, sortKey, onSort, onDismiss }) =>
         >
         Title
         </Sort>
+      </span>
+      <span style={{ midColumn }}>
+        <Sort 
+          sortKey={'AUTHOR'}
+          onSort={onSort}
+        >
+        Author
+        </Sort>
+      </span>
+      <span style={{ smallColumn }}>
+        <Sort 
+          sortKey={'COMMENTS'}
+          onSort={onSort}
+        >
+        Comments
+        </Sort>
+      </span>
+      <span style={{ smallColumn }}>
+        Archive
       </span>
     </div>
       { SORTS[sortKey](list).map(item =>

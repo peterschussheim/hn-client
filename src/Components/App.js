@@ -26,6 +26,7 @@ export default class App extends Component {
       searchKey: '',
       searchTerm: DEFAULT_QUERY,
       isLoading: false,
+      sortKey: 'NONE',
     };
 
     this.needsToSearchTopstories = this.needsToSearchTopstories.bind(this);

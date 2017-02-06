@@ -1,19 +1,11 @@
 import React, { Component } from 'react';
-import { sortBy } from 'lodash';
-
 import '../App.css';
 import Search from './Search';
 import Table from './Table';
+// import { SORTS } from '/Table.js'
 import { ButtonWithLoading } from './Button';
 // import Loading from './Loading'
 
-const SORTS = {
-  NONE: list => list,
-  TITLE: list => sortBy(list, 'title'),
-  AUTHOR: list => sortBy(list, 'author'),
-  COMMENTS: list => sortBy(list, 'num_comments').reverse(),
-  POINTS: list => sortBy(list, 'points').reverse(),
-};
 
 const DEFAULT_QUERY = 'react';
 const DEFAULT_PAGE = 0;

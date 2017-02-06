@@ -1,12 +1,12 @@
-import React from 'react'
+import React from 'react';
 import { sortBy } from 'lodash';
 
-import { Button } from './Button'
+import { Button } from './Button';
 
 // styles for Table
-const largeColumn = { width: '40%' }
-const midColumn = { width: '30%' }
-const smallColumn = { width: '10%' }
+const largeColumn = { width: '40%' };
+const midColumn = { width: '30%' };
+const smallColumn = { width: '10%' };
 
 const SORTS = {
   NONE: list => list,
@@ -16,46 +16,44 @@ const SORTS = {
   POINTS: list => sortBy(list, 'points').reverse(),
 };
 
-const Sort = ({ sortKey, onSort, children }) =>
-  <Button
-    onClick={() => onSort(sortKey)}
-    className="button-inline"
-  >
+const Sort = ({ sortKey, onSort, children }) => (
+  <Button onClick={() => onSort(sortKey)} className="button-inline">
     {children}
   </Button>
+);
 
-const Table = ({ list, sortKey, onSort, onDismiss }) =>
-  <div className="table">
-    <div className="table-header">
-      <span style={{ largeColumn }}>
-        <Sort 
-          sortKey={'TITLE'}
-          onSort={onSort}
-        >
-        Title
-        </Sort>
-      </span>
-      <span style={{ midColumn }}>
-        <Sort 
-          sortKey={'AUTHOR'}
-          onSort={onSort}
-        >
-        Author
-        </Sort>
-      </span>
-      <span style={{ smallColumn }}>
-        <Sort 
-          sortKey={'COMMENTS'}
-          onSort={onSort}
-        >
-        Comments
-        </Sort>
-      </span>
-      <span style={{ smallColumn }}>
-        Archive
-      </span>
-    </div>
-      { SORTS[sortKey](list).map(item =>
+const Table = ({ list, sortKey, isSortReverse, onSort, onDismiss }) => {
+  const sortedList = SORTS[sortKey](list);
+  const reverseSortedList = isSortReverse ? sortedList.reverse() : sortedList;
+
+  return (
+    <div className="table">
+      <div className="table-header">
+        <span style={{ width: '40%' }}>
+          <Sort sortKey={'TITLE'} onSort={onSort}>
+            Title
+          </Sort>
+        </span>
+        <span style={{ width: '30%' }}>
+          <Sort sortKey={'AUTHOR'} onSort={onSort}>
+            Author
+          </Sort>
+        </span>
+        <span style={{ width: '10%' }}>
+          <Sort sortKey={'COMMENTS'} onSort={onSort}>
+            Comments
+          </Sort>
+        </span>
+        <span style={{ width: '10%' }}>
+          <Sort sortKey={'POINTS'} onSort={onSort}>
+            Points
+          </Sort>
+        </span>
+        <span style={{ width: '10%' }}>
+          Archive
+        </span>
+      </div>
+      { reverseSortedList.map(item => (
         <div key={item.objectID} className="table-row">
           <span style={largeColumn}>
             <a href={item.url}> {item.title} </a>
@@ -69,15 +67,18 @@ const Table = ({ list, sortKey, onSort, onDismiss }) =>
           <span style={smallColumn}>
             {item.points}
           </span>
-          <span>
+          <span style={smallColumn}>
             <Button
               onClick={() => onDismiss(item.objectID)}
-              className="button-inline">
+              className="button-inline"
+            >
               Dismiss
             </Button>
           </span>
         </div>
-      )}
-  </div>
+      ))}
+    </div>
+  );
+};
 
-export default Table
+export default Table;

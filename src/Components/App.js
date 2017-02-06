@@ -6,7 +6,6 @@ import Table from './Table';
 import { ButtonWithLoading } from './Button';
 // import Loading from './Loading'
 
-
 const DEFAULT_QUERY = 'react';
 const DEFAULT_PAGE = 0;
 const DEFAULT_HPP = '100';
@@ -27,6 +26,7 @@ export default class App extends Component {
       searchTerm: DEFAULT_QUERY,
       isLoading: false,
       sortKey: 'NONE',
+      isSortReverse: false,
     };
 
     this.needsToSearchTopstories = this.needsToSearchTopstories.bind(this);
@@ -39,7 +39,10 @@ export default class App extends Component {
   }
 
   onSort(sortKey) {
-    this.setState({ sortKey });
+    const isSortReverse = this.state.sortKey === sortKey &&
+      !this.state.isSortReverse;
+
+    this.setState({ sortKey, isSortReverse });
   }
 
   componentDidMount() {
@@ -111,9 +114,16 @@ export default class App extends Component {
   }
 
   render() {
-    const { searchTerm, results, searchKey, isLoading, sortKey } = this.state;
-    const page = results && results[searchKey] && results[searchKey].page || 0;
+    const {
+      searchTerm,
+      results,
+      searchKey,
+      isLoading,
+      sortKey,
+      isSortReverse,
+    } = this.state;
 
+    const page = results && results[searchKey] && results[searchKey].page || 0;
     const list = results && results[searchKey] && results[searchKey].hits || [];
 
     return (
@@ -127,11 +137,12 @@ export default class App extends Component {
             Search
           </Search>
         </div>
-        <Table 
+        <Table
           list={list}
           sortKey={sortKey}
+          isSortReverse={isSortReverse}
           onSort={this.onSort}
-          onDismiss={this.onDismiss} 
+          onDismiss={this.onDismiss}
         />
         <div className="interactions">
           <ButtonWithLoading

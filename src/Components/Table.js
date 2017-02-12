@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames'
 import { sortBy } from 'lodash';
 
 import { Button } from './Button';
@@ -16,11 +17,23 @@ const SORTS = {
   POINTS: list => sortBy(list, 'points').reverse(),
 };
 
-const Sort = ({ sortKey, onSort, children }) => (
-  <Button onClick={() => onSort(sortKey)} className="button-inline">
-    {children}
-  </Button>
-);
+const Sort = ({ sortKey, onSort, children, activeSortKey }) => {
+  const sortClass = classNames(
+    'button-inline',
+    { 'button-active': sortKey === activeSortKey }
+  )
+
+  return (
+    <Button
+      onClick={() => onSort(sortKey)}
+      className={sortClass}
+      type="button"
+    >
+      {children}
+    </Button>
+  )
+
+}
 
 const Table = ({ list, sortKey, isSortReverse, onSort, onDismiss }) => {
   const sortedList = SORTS[sortKey](list);

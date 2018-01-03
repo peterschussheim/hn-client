@@ -1,4 +1,6 @@
 # hn-client
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/peterschussheim/hn-client.svg)](https://greenkeeper.io/)
 [![CircleCI](https://circleci.com/gh/peterschussheim/hn-client.svg?style=svg)](https://circleci.com/gh/peterschussheim/hn-client)
 ## TODO
 
